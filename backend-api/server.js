@@ -1,28 +1,21 @@
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 
-const PORT = 3000;
+app.use(express.static(path.join(__dirname, "../frontend")));
 
-// Загружаем товары из JSON
-const getProducts = () => {
-    const data = fs.readFileSync("data/products.json");
-    return JSON.parse(data);
-};
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
 
-// API для получения всех товаров
 app.get("/products", (req, res) => {
-    res.json(getProducts());
+    const data = fs.readFileSync(path.join(__dirname, "data/products.json"));
+    res.json(JSON.parse(data));
 });
 
-// API для получения товаров по категории
-app.get("/products/category/:category", (req, res) => {
-    const category = req.params.category;
-    const products = getProducts().filter(p => p.category.includes(category));
-    res.json(products);
-});
-
-app.listen(PORT, () => console.log(`Сервер API работает на порту ${PORT}`));
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Сервер API работает на http://localhost:${PORT}`));
