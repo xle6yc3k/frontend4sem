@@ -3,6 +3,8 @@ const cors = require("cors");
 const fs = require("fs");
 const bodyParser = require("body-parser");
 const path = require("path");
+const http = require("http");
+const { WebSocketServer } = require("ws");
 
 const app = express();
 const PORT = 8080;
@@ -12,78 +14,89 @@ app.use(bodyParser.json());
 
 const productsFile = path.join(__dirname, "../backend-api/data/products.json");
 
-// 📌 Функция загрузки товаров
 const getProducts = () => {
     if (!fs.existsSync(productsFile)) return [];
     const data = fs.readFileSync(productsFile);
     return JSON.parse(data);
 };
 
-// 📌 Функция сохранения товаров
 const saveProducts = (products) => {
     fs.writeFileSync(productsFile, JSON.stringify(products, null, 2));
 };
 
-// 📌 Раздача статических файлов админки
+// 📌 Раздаём файлы для админки
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-// 📌 Открываем `admin.html` при запросе `/admin`
 app.get("/admin", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/admin.html"));
 });
 
-// 📌 Получение всех товаров
 app.get("/admin/products", (req, res) => {
     res.json(getProducts());
 });
 
-// 📌 Добавление одного или нескольких товаров
 app.post("/admin/products", (req, res) => {
     const products = getProducts();
-    const newProducts = req.body;
-
-    if (Array.isArray(newProducts)) {
-        newProducts.forEach(product => {
-            product.id = products.length + 1;
-            products.push(product);
-        });
-    } else {
-        newProducts.id = products.length + 1;
-        products.push(newProducts);
-    }
-
+    const newProduct = req.body;
+    newProduct.id = products.length + 1;
+    products.push(newProduct);
     saveProducts(products);
-    res.status(201).json({ message: "Товары добавлены", products: newProducts });
+    res.status(201).json({ message: "Товар добавлен", product: newProduct });
 });
 
-// 📌 Редактирование товара по ID
-app.put("/admin/products/:id", (req, res) => {
-    const products = getProducts();
-    const id = parseInt(req.params.id);
-    const index = products.findIndex(p => p.id === id);
+// 📌 WebSocket сервер для чата (общение между админом и пользователем)
+const server = http.createServer(app);
+const wss = new WebSocketServer({ server });
 
-    if (index !== -1) {
-        products[index] = { ...products[index], ...req.body };
-        saveProducts(products);
-        res.json({ message: "Товар обновлён", product: products[index] });
+let clients = {
+    admin: null,
+    users: []
+};
+
+wss.on("connection", (ws, req) => {
+    console.log("🔌 Новое соединение WebSocket");
+    
+    const isAdmin = req.url.includes("/admin");
+    
+    if (isAdmin) {
+        clients.admin = ws;
+        console.log("🛠 Админ подключился");
     } else {
-        res.status(404).json({ message: "Товар не найден" });
+        clients.users.push(ws);
+        console.log("👤 Новый пользователь подключился");
     }
-});
 
-// 📌 Удаление товара по ID
-app.delete("/admin/products/:id", (req, res) => {
-    let products = getProducts();
-    const id = parseInt(req.params.id);
-    const filteredProducts = products.filter(p => p.id !== id);
+    ws.on("message", (message) => {
+        console.log(`📩 Получено сообщение: ${message}`);
+        const msgData = JSON.parse(message);
 
-    if (filteredProducts.length !== products.length) {
-        saveProducts(filteredProducts);
-        res.json({ message: "Товар удалён" });
-    } else {
-        res.status(404).json({ message: "Товар не найден" });
-    }
+        if (isAdmin) {
+            // Если сообщение от админа – пересылаем всем пользователям
+            clients.users.forEach(client => {
+                if (client.readyState === ws.OPEN) {
+                    client.send(JSON.stringify(msgData));
+                }
+            });
+        } else {
+            // Если сообщение от пользователя – пересылаем админу
+            if (clients.admin && clients.admin.readyState === ws.OPEN) {
+                clients.admin.send(JSON.stringify(msgData));
+            }
+        }
+    });
+
+    ws.on("close", () => {
+        console.log("❌ Клиент отключился");
+        if (isAdmin) {
+            clients.admin = null;
+        } else {
+            clients.users = clients.users.filter(client => client !== ws);
+        }
+    });
 });
 
 // 📌 Запуск сервера
-app.listen(PORT, () => console.log(`Админ-панель работает на http://localhost:${PORT}/admin`));
+server.listen(PORT, () => {
+    console.log(`🔹 Админ-панель работает на http://localhost:${PORT}/admin`);
+    console.log(`🔹 WebSocket API: ws://localhost:${PORT}`);
+});

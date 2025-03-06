@@ -50,6 +50,26 @@
         </table>
     </div>
 
+    <!-- 📌 Чат -->
+    <div class="container mt-5">
+        <h2 class="text-center">Чат поддержки (Админ)</h2>
+        <div id="chat-box" class="chat-box"></div>
+        <div class="chat-input">
+            <input type="text" id="chat-message" placeholder="Введите сообщение..." class="form-control">
+            <button id="send-message" class="btn btn-primary mt-2">Отправить</button>
+        </div>
+    </div>
+
+    <style>
+        .chat-box {
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+
     <script src="admin.js"></script>
 </body>
 </html>

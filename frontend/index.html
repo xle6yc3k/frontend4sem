@@ -10,8 +10,53 @@
 <body>
     <div class="container">
         <h1 class="text-center my-4">Каталог товаров</h1>
-        <div id="products" class="row"></div>
+    
+        <!-- Выбор данных -->
+        <div class="mb-3">
+            <label for="dataSelector" class="form-label">Выбрать отображаемые данные:</label>
+            <select id="dataSelector" class="form-select">
+                <option value="all">Все данные</option>
+                <option value="namesPrices">Название + Цена</option>
+                <option value="namesDescriptions">Название + Описание</option>
+            </select>
+        </div>
+    
+        <!-- Фильтр по категориям -->
+        <div class="mb-3">
+            <label for="categorySelector" class="form-label">Фильтр по категориям:</label>
+            <select id="categorySelector" class="form-select">
+                <option value="all">Все категории</option>
+            </select>
+        </div>
+    
+        <!-- Кнопка для обновления списка товаров -->
+        <button id="applyFilter" class="btn btn-primary">Применить фильтр</button>
+    
+        <!-- Каталог товаров -->
+        <div id="products" class="row mt-4"></div>
     </div>
-    <script defer src="script.js"></script>
+    <div class="container mt-5">
+        <h2 class="text-center">Чат поддержки</h2>
+        <div id="chat-box" class="chat-box">
+            <!-- Сообщения чата -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-message" placeholder="Введите сообщение..." class="form-control">
+            <button id="send-message" class="btn btn-primary mt-2">Отправить</button>
+        </div>
+    </div>
+    
+    <style>
+    .chat-box {
+        height: 300px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+    }
+    </style>
+    
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>

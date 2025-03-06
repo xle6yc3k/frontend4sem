@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "bootstrap": "^5.3.3"
+    "@apollo/client": "^3.13.1",
+    "apollo-boost": "^0.4.9",
+    "bootstrap": "^5.3.3",
+    "graphql": "^15.10.1",
+    "ws": "^8.18.1"
   }
 }

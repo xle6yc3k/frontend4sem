@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Ноутбук",
-    "price": 4000,
+    "price": 5,
     "description": "Мощный ноутбук для работы",
     "category": [
       "Электроника"
@@ -44,5 +44,14 @@
     "category": [
       "Одежда"
     ]
+  },
+  {
+    "name": "Apple Godbook",
+    "price": 6000000,
+    "description": "God?Gavno",
+    "category": [
+      "Электроника"
+    ],
+    "id": 6
   }
 ]
