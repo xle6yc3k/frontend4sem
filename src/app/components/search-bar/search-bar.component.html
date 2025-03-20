@@ -1,0 +1,10 @@
+<mat-form-field appearance="fill" style="width: 100%; margin-bottom: 1rem;">
+    <mat-label>Поиск товаров</mat-label>
+    <input
+      matInput
+      [(ngModel)]="query"
+      (input)="onSearchChange()"
+      placeholder="Например: Galaxy"
+    />
+  </mat-form-field>
+  

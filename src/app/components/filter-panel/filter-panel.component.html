@@ -1,0 +1,12 @@
+<div style="margin: 1rem 0;">
+    <button
+      *ngFor="let category of categories"
+      mat-raised-button
+      color="primary"
+      (click)="setFilter(category)"
+      style="margin-right: 8px;"
+    >
+      {{ category }}
+    </button>
+  </div>
+  

@@ -1,0 +1,15 @@
+<app-filter-panel (filterChange)="productsService.setCategory($event)"></app-filter-panel>
+<app-sort-panel (sortChange)="productsService.setSortBy($event)"></app-sort-panel>
+<app-search-bar (searchChange)="productsService.setSearchQuery($event)"></app-search-bar>
+
+<div class="product-list" [@listStagger]>
+  <ng-container *ngIf="!isLoading && finalProducts.length > 0; else loading">
+    <div class="product-card-wrapper" *ngFor="let product of finalProducts">
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <p>Загрузка товаров...</p>
+  </ng-template>
+</div>
