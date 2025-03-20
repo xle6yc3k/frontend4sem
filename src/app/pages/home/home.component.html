@@ -1,8 +1,16 @@
 <mat-toolbar color="primary">
-    <span>Интернет-магазин</span>
-  </mat-toolbar>
-  
-  <div class="home-content">
+  <span class="brand">Интернет-магазин</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="themeService.toggleTheme()" aria-label="Тема">
+    <mat-icon>brightness_4</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="home-wrapper">
+  <div class="product-section">
     <app-product-list></app-product-list>
   </div>
-  
+  <div class="cart-section">
+    <app-cart></app-cart>
+  </div>
+</div>

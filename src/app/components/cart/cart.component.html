@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-title>Корзина</mat-card-title>
+    <mat-list *ngIf="items.length > 0; else emptyCart">
+        <mat-list-item *ngFor="let item of items" @itemAnimation>
+            <div style="flex-grow: 1">
+              {{ item.title }} — {{ item.quantity }} x {{ item.price }} ₽
+            </div>
+            <button mat-button color="warn" (click)="remove(item)">Удалить</button>
+          </mat-list-item>          
+    </mat-list>
+  
+    <ng-template #emptyCart>
+      <p style="padding: 1rem;">Корзина пуста</p>
+    </ng-template>
+  
+    <mat-card-content>
+      <h4>Общая стоимость: {{ total }} ₽</h4>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="clear()"
+        *ngIf="items.length > 0"
+      >
+        Очистить корзину
+      </button>
+    </mat-card-content>
+  </mat-card>
+  

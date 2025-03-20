@@ -1,4 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body.light-theme {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-bg: #f3f3f3;
+    --accent-gradient: linear-gradient(90deg, #ff8acb, #6cd3ff);
+    --button-bg: var(--accent-gradient);
+    --button-text: #000;
+  }
+  
+  body.dark-theme {
+    --bg-color: #0c1125;
+    --text-color: #ffffff;
+    --card-bg: #1b1f3a;
+    --accent-gradient: linear-gradient(90deg, #ff8acb, #6cd3ff);
+    --button-bg: var(--accent-gradient);
+    --button-text: #fff;
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  

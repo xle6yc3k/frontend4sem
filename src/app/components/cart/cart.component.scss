@@ -1,0 +1,16 @@
+mat-card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+  }
+  
+  button {
+    background: var(--button-bg);
+    color: var(--button-text);
+    margin-left: auto;
+  }
+  
+  mat-list-item {
+    align-items: start;
+    justify-content: space-between;
+  }
+  

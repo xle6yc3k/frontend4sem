@@ -1,5 +1,62 @@
-.product-card {
-    max-width: 300px;
-    margin: 1rem;
-  }
-  
+mat-card.product-card {
+  width: 100%;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+
+  /* 👇 Стеклянный эффект */
+  background-color: rgba(255, 255, 255, 0.08); // или 0.15 для светлой темы
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* 👇 Градиентная рамка */
+  border: 1px solid;
+  border-image: linear-gradient(135deg, #ff8acb, #6cd3ff) 1;
+  border-radius: 10px;
+
+  /* Тень */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+mat-card.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+
+mat-card:hover {
+  transform: translateY(-4px);
+}
+
+mat-card img {
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+mat-card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+button {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 6px 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+  align-self: start;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}

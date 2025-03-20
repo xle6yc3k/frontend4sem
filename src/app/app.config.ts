@@ -3,6 +3,7 @@ import { importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 
+import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +13,6 @@ export const appConfig = {
     provideHttpClient(withFetch()),
     importProvidersFrom(MatCardModule, MatToolbarModule),
     provideRouter(routes),
-    importProvidersFrom(MatButtonModule)
+    importProvidersFrom(MatListModule, MatButtonModule)
   ]
 };

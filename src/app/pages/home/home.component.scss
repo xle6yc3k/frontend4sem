@@ -1,4 +1,40 @@
-.home-content {
-    padding: 2rem;
+.home-wrapper {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.product-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-section {
+  max-width: 400px;
+}
+
+mat-toolbar {
+  background: var(--accent-gradient);
+  color: #fff;
+  border-radius: 20px;
+}
+
+.brand {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+@media (max-width: 768px) {
+  .home-wrapper {
+    flex-direction: column;
   }
-  
+
+  .cart-section {
+    width: 100%;
+  }
+}
