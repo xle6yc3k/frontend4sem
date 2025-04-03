@@ -18,6 +18,7 @@
   "homepage": "https://github.com/xle6yc3k/frontend4sem#readme",
   "description": "",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
     "express-session": "^1.18.1"

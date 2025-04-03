@@ -1,10 +1,7 @@
 [
+ 
   {
-    "username": "1234",
-    "password": "1234"
-  },
-  {
-    "username": "login",
-    "password": "123"
+    "username": "123",
+    "password": "$2b$10$ZbjWZCz3ah5YQT2QdCozlu6qpJ5wfNyUmv8u4FZedxNNawSAJWUyi"
   }
 ]

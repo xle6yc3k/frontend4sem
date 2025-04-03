@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <title>Кэш и Cookie</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta charset="UTF-8" />
+  <title>Кэш и Сессии</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="/script.js" defer></script>
 </head>
 <body>
   <!-- Авторизация / Регистрация -->
   <div id="auth-section">
     <h2>Вход</h2>
-    <input type="text" id="username" placeholder="Логин">
-    <input type="password" id="password" placeholder="Пароль">
+    <input type="text" id="username" placeholder="Логин" />
+    <input type="password" id="password" placeholder="Пароль" />
     <button id="login-btn">Войти</button>
     <p id="error-message" class="error hidden"></p>
     <h3>Нет аккаунта? Зарегистрируйтесь:</h3>
-    <input type="text" id="reg-username" placeholder="Новый логин">
-    <input type="password" id="reg-password" placeholder="Новый пароль">
+    <input type="text" id="reg-username" placeholder="Новый логин" />
+    <input type="password" id="reg-password" placeholder="Новый пароль" />
     <button id="register-btn">Зарегистрироваться</button>
   </div>
 
@@ -32,7 +33,5 @@
     </div>
     <div id="data-container"></div>
   </div>
-
-  <script src="/script.js"></script>
 </body>
 </html>
