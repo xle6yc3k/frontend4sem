@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Мое PWA</title>
+        
+        <!-- Основной манифест -->
+        <link rel="manifest" href="/manifest.json">
+        
+        <!-- Универсальный тег для установки на домашний экран -->
+        <meta name="mobile-web-app-capable" content="yes">
+        
+        <!-- Цвет темы для адресной строки -->
+        <meta name="theme-color" content="#4285f4">
+        
+        <!-- Иконки для iOS (по-прежнему требуют отдельного тега) -->
+        <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+        
+        <!-- Дополнительно: Splash Screen для iOS -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <style>
+            body { font-family: sans-serif; padding: 1rem; max-width: 600px; margin: auto; }
+            h1 { color: #4caf50; }
+            textarea { width: 100%; min-height: 80px; padding: 0.5rem; }
+            button { margin-top: 0.5rem; padding: 0.5rem 1rem; background: #4caf50; color: white; border: none; cursor: pointer; }
+            ul { list-style: none; padding: 0; }
+            li { padding: 0.5rem; border-bottom: 1px solid #ccc; display: flex; justify-content: space-between; }
+            .offline { color: red; font-weight: bold; margin-top: 1rem; }
+          </style>
+        </head>
+        <body>
+          <h1>Заметки</h1>
+          <textarea id="noteInput" placeholder="Введите заметку..."></textarea>
+          <button onclick="addNote()">Добавить</button>
+          <ul id="notesList"></ul>
+          <div id="offlineIndicator" class="offline" style="display: none;">Офлайн-режим</div>
+        
+          <script>
+            const notesKey = 'notes';
+            let notes = JSON.parse(localStorage.getItem(notesKey)) || [];
+        
+            function saveNotes() {
+              localStorage.setItem(notesKey, JSON.stringify(notes));
+            }
+        
+            function renderNotes() {
+              const list = document.getElementById('notesList');
+              list.innerHTML = '';
+              notes.forEach((note, i) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span>${note}</span><button onclick="deleteNote(${i})">Удалить</button>`;
+                list.appendChild(li);
+              });
+            }
+        
+            function addNote() {
+              const input = document.getElementById('noteInput');
+              const value = input.value.trim();
+              if (!value) return;
+              notes.push(value);
+              saveNotes();
+              renderNotes();
+              input.value = '';
+            }
+        
+            function deleteNote(index) {
+              notes.splice(index, 1);
+              saveNotes();
+              renderNotes();
+            }
+        
+            window.addEventListener('load', () => {
+              renderNotes();
+        
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').catch(console.error);
+              }
+        
+              window.addEventListener('online', updateNetworkStatus);
+              window.addEventListener('offline', updateNetworkStatus);
+              updateNetworkStatus();
+            });
+        
+            function updateNetworkStatus() {
+              const indicator = document.getElementById('offlineIndicator');
+              indicator.style.display = navigator.onLine ? 'none' : 'block';
+            }
+          </script>
+        </body>
+        </html>
